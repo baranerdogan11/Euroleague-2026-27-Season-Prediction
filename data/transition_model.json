@@ -1,0 +1,38 @@
+{
+  "intercept": 0.06828531074862991,
+  "slope": 0.05530609216870447,
+  "slope_se": 0.21818303512717566,
+  "resid_sd_net": 4.136087212880431,
+  "n_points": 10,
+  "ec_net_fit_range": [
+    5.962500000000001,
+    22.926086956521743
+  ],
+  "promoted_el_net_mean": 0.7840221022527528,
+  "besiktas_targets": {
+    "2023-2024": {
+      "ec_net": -2.41,
+      "regression_net": -0.07,
+      "ratio_only_net": -13.72,
+      "el_net_target": -13.72,
+      "in_fit_range": false,
+      "gp": 23
+    },
+    "2024-2025": {
+      "ec_net": 1.24,
+      "regression_net": 0.14,
+      "ratio_only_net": -10.46,
+      "el_net_target": -10.46,
+      "in_fit_range": false,
+      "gp": 19
+    },
+    "2025-2026": {
+      "ec_net": 12.75,
+      "regression_net": 0.77,
+      "ratio_only_net": 1.07,
+      "el_net_target": 0.77,
+      "in_fit_range": true,
+      "gp": 23
+    }
+  }
+}

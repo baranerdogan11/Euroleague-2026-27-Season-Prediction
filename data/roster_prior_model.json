@@ -1,0 +1,30 @@
+{
+ "model": "carry + PIR + RAPM + continuity",
+ "coef": {
+  "intercept": -2.6234457050460858,
+  "carry_net_f": 0.3504601638180378,
+  "pir_f": 0.6773766447053944,
+  "rapm_f": 0.21882940466381218,
+  "continuity_f": 3.506125508272007
+ },
+ "resid_sd": 4.498831223181072,
+ "loso_rmse": 4.466277775420687,
+ "loso_all": {
+  "carry only": 4.718883279329868,
+  "carry + PIR + continuity": 4.467008146702704,
+  "carry + RAPM(top9) + continuity": 4.639203020896523,
+  "carry + RAPM(all) + continuity": 4.643637039458624,
+  "carry + PIR + RAPM + continuity": 4.466277775420687,
+  "RAPM + continuity (no carry)": 5.16280724905374
+ },
+ "rapm_shift": {
+  "EL": 0.0,
+  "EC": -1.614634146341463,
+  "ACB": -2.105,
+  "LBA": -1.1181818181818182,
+  "BCL": -1.614634146341463
+ },
+ "rapm_replacement": -2.0,
+ "ec_factor_pir40": 0.7380484546140542,
+ "n_train": 105
+}

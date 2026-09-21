@@ -1,0 +1,294 @@
+<title>Euroleague 2026-27 Projection</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --page:#f4f5f2;--surface:#fbfbf9;--ink:#14181d;--ink2:#5b6068;--muted:#8a8f96;--rule:#dcdedb;--rule2:#ebece8;
+  --accent:#d9541e;--accent-ink:#b8420f;--blue:#2a78d6;--aqua:#1baf7a;
+  --pos:#1c5cab;--neg:#c43a3a;--band:#e9d8cf;
+  --h100:#cde2fb;--h200:#9ec5f4;--h300:#6da7ec;--h400:#3987e5;--h500:#256abf;--h600:#184f95;--h700:#0d366b;
+  --tier1:rgba(217,84,30,.10);--tier2:rgba(42,120,214,.09);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --page:#111316;--surface:#181b1f;--ink:#f2f3f0;--ink2:#a9adb3;--muted:#7f848b;--rule:#2b2f35;--rule2:#22262b;
+    --accent:#e8683a;--accent-ink:#f08a63;--blue:#3987e5;--aqua:#199e70;--pos:#5598e7;--neg:#e66767;--band:#4a2e22;
+    --h100:#1a2a40;--h200:#1c3d63;--h300:#1f4f84;--h400:#2a66a8;--h500:#3987e5;--h600:#6da7ec;--h700:#9ec5f4;
+    --tier1:rgba(232,104,58,.14);--tier2:rgba(57,135,229,.14);
+  }
+}
+:root[data-theme="dark"]{
+  --page:#111316;--surface:#181b1f;--ink:#f2f3f0;--ink2:#a9adb3;--muted:#7f848b;--rule:#2b2f35;--rule2:#22262b;
+  --accent:#e8683a;--accent-ink:#f08a63;--blue:#3987e5;--aqua:#199e70;--pos:#5598e7;--neg:#e66767;--band:#4a2e22;
+  --h100:#1a2a40;--h200:#1c3d63;--h300:#1f4f84;--h400:#2a66a8;--h500:#3987e5;--h600:#6da7ec;--h700:#9ec5f4;
+  --tier1:rgba(232,104,58,.14);--tier2:rgba(57,135,229,.14);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15px;line-height:1.5}
+.wrap{max-width:1120px;margin:0 auto;padding:40px 28px 72px}
+h1,h2,.disp{font-family:"Barlow Condensed","Arial Narrow",Impact,sans-serif;font-weight:700;letter-spacing:.005em;text-wrap:balance}
+h1{font-size:60px;line-height:.95;margin:0 0 10px;text-transform:uppercase}
+h1 span{color:var(--accent)}
+h2{font-size:30px;line-height:1.05;margin:0 0 6px;text-transform:uppercase}
+.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);font-weight:600}
+.lede{max-width:66ch;color:var(--ink2);font-size:16px;margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:10px 28px;margin:22px 0 0;padding:14px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.meta div{display:flex;flex-direction:column}
+.meta b{font-family:"Barlow Condensed",sans-serif;font-size:26px;font-weight:700;line-height:1}
+.meta span{font-size:12px;color:var(--ink2);letter-spacing:.06em;text-transform:uppercase}
+section{margin-top:56px}
+.sec-head{display:grid;grid-template-columns:1fr;gap:6px;margin-bottom:18px}
+.sec-head p{margin:0;max-width:72ch;color:var(--ink2)}
+.panel{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:18px 20px}
+.scroll{overflow-x:auto}
+svg text{font-family:"IBM Plex Sans",system-ui,sans-serif;fill:var(--ink)}
+svg .lab{fill:var(--ink2);font-size:12px}
+svg .num{font-variant-numeric:tabular-nums;font-size:12px}
+svg .tier{font-family:"Barlow Condensed",sans-serif;font-size:13px;font-weight:700;letter-spacing:.08em;fill:var(--accent-ink);text-transform:uppercase}
+svg .tier.b{fill:var(--pos)}
+svg .grid{stroke:var(--rule2);stroke-width:1}
+svg .axis{stroke:var(--rule);stroke-width:1}
+svg .band{fill:var(--band)}
+svg .dot{fill:var(--accent)}
+svg .row:hover .band{fill:var(--accent);fill-opacity:.35}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--ink2);margin-top:8px;align-items:center}
+/* standings table */
+.standings-panel{padding:6px 0 14px}
+.standings{border-collapse:collapse;width:100%;min-width:760px;font-size:14px}
+.standings th{position:sticky;top:0;background:var(--surface);z-index:1;padding:12px 12px 10px;font-size:11px;letter-spacing:.1em;text-align:right;border-bottom:1px solid var(--rule)}
+.standings th.l,.standings td.l{text-align:left}
+.standings th.c,.standings td.c{text-align:center}
+.standings td{padding:0 12px;height:46px;border-bottom:1px solid var(--rule2);vertical-align:middle;white-space:nowrap}
+.standings tr:hover td{background:var(--rule2)}
+.standings td.rank{width:44px;font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:700;color:var(--ink2);text-align:center;padding:0 6px}
+.standings td.club{font-weight:600;font-size:15px}
+.standings td.club small{display:block;font-weight:400;font-size:11.5px;color:var(--muted);letter-spacing:.04em;line-height:1.1;margin-top:1px}
+.standings td.rec{font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:700;line-height:1;text-align:right;width:92px}
+.standings td.rec small{display:block;font-family:"IBM Plex Sans",sans-serif;font-weight:400;font-size:11px;color:var(--muted);letter-spacing:.02em;margin-top:2px}
+.standings td.range{width:260px;padding:0 16px}
+.range svg{display:block;width:100%;height:22px;overflow:visible}
+.range .r-band{fill:var(--band)}
+.range .r-dot{fill:var(--accent)}
+.range .r-mid{stroke:var(--rule);stroke-width:2}
+.range .r-tick{fill:var(--muted);font-size:9.5px;font-variant-numeric:tabular-nums}
+.standings td.prob{width:84px;text-align:center;padding:0 6px}
+.prob span{display:inline-block;min-width:56px;padding:5px 8px;border-radius:4px;font-variant-numeric:tabular-nums;font-weight:600;font-size:13px;background:color-mix(in oklab,var(--pcol) calc(var(--p)*100%),transparent);color:var(--ink)}
+.prob span.hi{color:#fff}
+.standings tr.cut-6 td{border-bottom:2px solid var(--accent)}
+.standings tr.cut-10 td{border-bottom:2px solid var(--blue)}
+.standings tr.tier-lab td{height:28px;padding:0 12px;font-family:"Barlow Condensed",sans-serif;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);background:var(--tier1);border-bottom:0}
+.standings tr.tier-lab.b td{color:var(--pos);background:var(--tier2)}
+.standings tr.tier-lab.o td{color:var(--ink2);background:transparent}
+@media (max-width:820px){.standings td.club small{display:none}}
+.legend i{display:inline-block;vertical-align:middle;margin-right:6px}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--page);padding:8px 10px;border-radius:4px;font-size:12px;line-height:1.4;max-width:260px;opacity:0;transition:opacity .08s;z-index:9}
+.tip b{font-family:"Barlow Condensed",sans-serif;font-size:15px;letter-spacing:.02em}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:13.5px}
+th{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);font-weight:600;text-align:right;padding:8px 10px;border-bottom:1px solid var(--rule);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+td{padding:7px 10px;border-bottom:1px solid var(--rule2);text-align:right;white-space:nowrap}
+td.team{font-weight:600}
+tr:hover td{background:var(--rule2)}
+.bar{display:inline-flex;align-items:center;gap:6px;min-width:120px;justify-content:flex-end}
+.bar i{display:block;height:9px;border-radius:2px}
+.bar.pos i{background:var(--pos)}
+.bar.neg i{background:var(--neg)}
+.hm{border-collapse:separate;border-spacing:2px}
+.hm td{padding:0;border:0;width:36px;height:24px;text-align:center;font-size:11px;color:var(--ink);border-radius:2px;position:relative}
+.hm td.team{width:auto;text-align:left;padding:0 10px 0 0;font-weight:600;font-size:13px}
+.hm th{padding:4px 0;text-align:center;border:0}
+.hm td.c{cursor:default}
+.hm td.c.hi{color:#fff}
+.finding{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:14px}
+.finding .panel{padding:16px 18px}
+.finding .disp{font-size:40px;line-height:1;margin:2px 0 4px}
+.finding p{margin:0;color:var(--ink2);font-size:13.5px}
+.two{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:start}
+.two>div,.panel,.finding>.panel{min-width:0}
+@media (max-width:820px){.two{grid-template-columns:1fr}h1{font-size:44px}}
+.note{font-size:13px;color:var(--ink2);max-width:76ch}
+.note ul{padding-left:18px;margin:6px 0}
+kbd{font-family:inherit;background:var(--rule2);padding:1px 5px;border-radius:3px;font-size:12px}
+.good{color:var(--pos)} .bad{color:var(--neg)}
+@media print{
+  :root{--page:#ffffff;--surface:#ffffff;--ink:#14181d;--ink2:#5b6068;--muted:#8a8f96;--rule:#dcdedb;--rule2:#ebece8;--accent:#d9541e;--accent-ink:#b8420f;--blue:#2a78d6;--pos:#1c5cab;--neg:#c43a3a;--band:#e9d8cf;--h100:#cde2fb;--h200:#9ec5f4;--h300:#6da7ec;--h400:#3987e5;--h500:#256abf;--h600:#184f95;--h700:#0d366b;--tier1:rgba(217,84,30,.10);--tier2:rgba(42,120,214,.09)}
+  @page{size:A4 landscape;margin:11mm 12mm}
+  html,body{background:#fff!important}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .wrap{max-width:none;padding:0}
+  section{margin-top:26px}
+  section+section{break-before:page;margin-top:0}
+  .sec-head{break-after:avoid}
+  tr,.finding>.panel,.meta,#loso,#val,#players{break-inside:avoid}
+  thead{display:table-header-group}
+  .standings th{position:static}
+  .scroll{overflow:visible}
+  .tip{display:none}
+  h1{font-size:46px}
+  .two{grid-template-columns:1fr;gap:16px}
+  .two>div:last-child{break-before:page}
+  .standings td{height:38px}
+  .hm td{height:20px;width:32px}
+}
+</style>
+<div class="wrap">
+  <div class="eyebrow">Pre-season projection · 10,000 simulated seasons · rosters as registered 20 Sep 2026</div>
+  <h1>Euroleague <span>2026-27</span><br>Projected Standings</h1>
+  <p class="lede">A home-win classifier (XGBoost anchored on Elo) trained on 1,848 Euroleague games from 2020-21 to 2025-26, fed roster-aware pre-season strength, run over the real 380-game schedule. Olympiacos is the clear favourite; positions four through eleven are separated by less than two expected wins.</p>
+  <div class="meta" id="meta"></div>
+
+  <section>
+    <div class="sec-head"><h2>Projected standings</h2>
+    <p>Clubs ordered by expected regular-season wins over 38 games. The range bar spans the middle 80% of simulated outcomes around the expected record; the shaded cells give each club's chance of a direct playoff place (top six), a play-in place (seventh to tenth) and the title-favourite spot. Hover a row for the full breakdown.</p></div>
+    <div class="panel scroll standings-panel">
+      <table class="standings" id="standings"></table>
+      <div class="legend"><span><i style="width:10px;height:10px;border-radius:50%;background:var(--accent)"></i>Expected wins</span><span><i style="width:22px;height:8px;border-radius:4px;background:var(--band)"></i>10th to 90th percentile</span><span><i style="width:2px;height:12px;background:var(--rule);display:inline-block"></i>&nbsp;19 wins = .500</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Where each club finishes</h2>
+    <p>Probability of each final position, from the same 10,000 seasons. Darker cells are more likely; numbers are percentages. The wide, flat rows in the middle are the honest picture: most of the league is a coin flip between playoffs and play-in.</p></div>
+    <div class="panel scroll"><table class="hm" id="heat"></table></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>What the rosters changed</h2>
+    <p>Each club's pre-season strength is a regression of last season's carried net rating, the prior-season production of the registered roster (PIR per 40 and net RAPM of the top nine, unknown arrivals at replacement level) and continuity, the share of last season's minutes still on the roster. Values in net rating points per 100 possessions.</p></div>
+    <div class="panel scroll"><table id="prior"></table></div>
+    <div class="finding" id="prior-notes"></div>
+  </section>
+
+  <section>
+    <div class="two">
+      <div>
+        <div class="sec-head"><h2>RAPM: pulled, matched, and mostly redundant</h2>
+        <p>Hackastat's regularised adjusted plus-minus was collected for every Euroleague and EuroCup player-season since 2020-21 (plus ACB, LBA and BCL for the last two seasons) and matched to league player codes for 98% of Euroleague rows. Tested as a roster valuation next to PIR, it did not improve the season-strength forecast.</p></div>
+        <div class="panel"><table id="loso"></table></div>
+        <div class="finding" id="rapm-notes"></div>
+      </div>
+      <div>
+        <div class="sec-head"><h2>Best net RAPM last season</h2><p>Euroleague 2025-26, at least 1,000 team possessions, with where each player is registered for 2026-27.</p></div>
+        <div class="panel scroll"><table id="players"></table></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>How much to trust it</h2>
+    <p>Rolling-origin validation: the model is trained on all seasons before the test season and scored on that season's games. Log loss, lower is better; 0.693 is a coin flip.</p></div>
+    <div class="two">
+      <div class="panel"><table id="val"></table></div>
+      <div class="note">
+        <p style="margin-top:0"><strong>Read the numbers this way.</strong> The classifier beats the home-court base rate clearly and matches a single-feature Elo model; the extra features buy calibration and roster awareness rather than raw accuracy. With under two thousand games that is the realistic ceiling.</p>
+        <ul>
+          <li>Strength is static across a simulated season and sampled once per iteration with a 4.5-point spread (the season-prior residual), wider for Beşiktaş's transfer-based prior.</li>
+          <li>Beşiktaş's history is EuroCup, transformed to Euroleague scale with ratios from eight previous promotions; promoted clubs have historically landed near net zero regardless of EuroCup dominance.</li>
+          <li>NBA and domestic-only arrivals carry no production history and count at replacement level, so clubs that recruited from there (ASVEL, Valencia's Gueye) are priced conservatively.</li>
+          <li>Tiebreaks use head-to-head record among tied clubs, then random; point differential is not simulated.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="tip" id="tip"></div>
+<script>
+const D = /*DATA*/;
+const $ = s => document.querySelector(s);
+const pct = x => Math.round(x*100);
+const tip = $('#tip');
+function showTip(e, html){ tip.innerHTML = html; tip.style.opacity = 1; moveTip(e); }
+function moveTip(e){ const w = tip.offsetWidth, h = tip.offsetHeight; let x = e.clientX + 14, y = e.clientY + 14; if (x + w > innerWidth - 8) x = e.clientX - w - 14; if (y + h > innerHeight - 8) y = e.clientY - h - 14; tip.style.left = x + 'px'; tip.style.top = y + 'px'; }
+function hideTip(){ tip.style.opacity = 0; }
+const meta = $('#meta');
+[[D.meta.iters.toLocaleString(), 'simulated seasons'], [D.meta.games, 'scheduled games'], [D.meta.trainGames.toLocaleString(), 'training games'], [D.wmean.xgb.toFixed(3), 'out-of-sample log loss'], [D.wmean.home.toFixed(3), 'home-rate baseline']].forEach(([b, s]) => { const d = document.createElement('div'); d.innerHTML = `<b>${b}</b><span>${s}</span>`; meta.appendChild(d); });
+
+// ---- standings table
+(function(){
+  const T = D.teams, LO = 4, HI = 34;
+  const x = v => (v - LO) / (HI - LO) * 100;
+  const cell = (p, col) => `<td class="prob"><span class="${p >= .6 ? 'hi' : ''}" style="--p:${Math.min(1, p / 0.9).toFixed(3)};--pcol:var(${col})">${pct(p)}%</span></td>`;
+  const range = t => `<svg viewBox="0 0 100 22" preserveAspectRatio="none">
+      <line class="r-mid" x1="${x(19)}" x2="${x(19)}" y1="2" y2="20" vector-effect="non-scaling-stroke"/>
+      <rect class="r-band" x="${x(t.p10)}" y="7" width="${x(t.p90) - x(t.p10)}" height="8" rx="4"/>
+      <circle class="r-dot" cx="${x(t.exp)}" cy="11" r="5" vector-effect="non-scaling-stroke"/>
+    </svg>`;
+  const tier = (label, cls) => `<tr class="tier-lab ${cls}"><td colspan="8">${label}</td></tr>`;
+  let h = `<thead><tr><th class="c">#</th><th class="l">Club</th><th>Projected</th><th class="l" style="padding-left:16px">Win range (10th to 90th pct)</th><th class="c">Playoffs</th><th class="c">Play-in</th><th class="c">1st place</th><th class="c">Bottom 3</th></tr></thead><tbody>`;
+  h += tier('Direct to playoffs', '');
+  T.forEach((t, i) => {
+    const losses = 38 - t.exp;
+    h += `<tr data-i="${i}" class="${i === 5 ? 'cut-6' : i === 9 ? 'cut-10' : ''}">
+      <td class="rank">${i + 1}</td>
+      <td class="club l">${t.name}<small>${t.full}</small></td>
+      <td class="rec">${t.exp.toFixed(1)}<span style="color:var(--muted);font-weight:500"> - </span>${losses.toFixed(1)}<small>${t.p10} to ${t.p90} wins</small></td>
+      <td class="range">${range(t)}</td>
+      ${cell(t.top6, '--accent')}${cell(t.playin, '--blue')}${cell(t.p1, '--accent')}${cell(t.bottom3, '--neg')}
+    </tr>`;
+    if (i === 5) h += tier('Play-in', 'b');
+    if (i === 9) h += tier('Season over', 'o');
+  });
+  $('#standings').innerHTML = h + '</tbody>';
+  document.querySelectorAll('#standings tr[data-i]').forEach(tr => {
+    const t = T[+tr.dataset.i];
+    const html = `<b>${t.full}</b><br>Expected ${t.exp.toFixed(1)} wins (sd ${t.sd})<br>10th to 90th pct: ${t.p10} to ${t.p90}<br>Median finish ${t.medRank}<br>Title favourite ${pct(t.p1)}% \u00b7 Top 6 ${pct(t.top6)}% \u00b7 Play-in ${pct(t.playin)}% \u00b7 Bottom 3 ${pct(t.bottom3)}%`;
+    tr.addEventListener('mousemove', e => showTip(e, html)); tr.addEventListener('mouseleave', hideTip);
+  });
+})();
+
+// ---- rank heatmap
+(function(){
+  const T = D.teams, ramp = ['--h100','--h200','--h300','--h400','--h500','--h600','--h700'];
+  let h = '<thead><tr><th></th>' + T.map((_, i) => `<th>${i+1}</th>`).join('') + '</tr></thead><tbody>';
+  T.forEach(t => {
+    h += `<tr><td class="team">${t.name}</td>` + t.ranks.map((p, r) => {
+      const lvl = p < .02 ? -1 : p < .05 ? 0 : p < .08 ? 1 : p < .12 ? 2 : p < .17 ? 3 : p < .25 ? 4 : p < .35 ? 5 : 6;
+      const style = lvl < 0 ? 'background:var(--rule2)' : `background:var(${ramp[lvl]})`;
+      return `<td class="c ${lvl>=3?'hi':''}" style="${style}" data-t="${t.name}" data-r="${r+1}" data-p="${p}">${p >= .02 ? pct(p) : ''}</td>`;
+    }).join('') + '</tr>';
+  });
+  $('#heat').innerHTML = h + '</tbody>';
+  document.querySelectorAll('#heat td.c').forEach(td => { td.addEventListener('mousemove', e => showTip(e, `<b>${td.dataset.t}</b><br>Finish ${td.dataset.r}: ${(td.dataset.p*100).toFixed(1)}%`)); td.addEventListener('mouseleave', hideTip); });
+})();
+
+// ---- prior table
+(function(){
+  const T = [...D.teams].sort((a, b) => b.prior - a.prior);
+  const bar = (v, max, w = 70) => `<span class="bar ${v >= 0 ? 'pos' : 'neg'}"><span class="num">${v > 0 ? '+' : ''}${v.toFixed(1)}</span><i style="width:${Math.max(2, Math.abs(v)/max*w)}px"></i></span>`;
+  let h = '<thead><tr><th>Club</th><th>Registered</th><th>With RAPM</th><th>Continuity</th><th>Carried net (2025-26)</th><th>Roster PIR/40 vs league</th><th>Roster RAPM (top 9)</th><th>Pre-season prior</th></tr></thead><tbody>';
+  T.forEach(t => { h += `<tr><td class="team">${t.name}</td><td>${t.n}</td><td>${t.known}</td><td>${pct(t.cont)}%</td><td>${bar(t.carry, 12)}</td><td>${bar(t.pir, 7)}</td><td>${bar(t.rapm, 2)}</td><td>${bar(t.prior, 12, 90)}</td></tr>`; });
+  $('#prior').innerHTML = h + '</tbody>';
+  const c = D.priorModel.coef;
+  $('#prior-notes').innerHTML = `
+    <div class="panel"><div class="eyebrow">Fitted prior</div><div class="disp">${c.carry_net_f.toFixed(2)} × carry</div><p>Only about a third of last season's net rating survives into the next; the rest is turnover and regression to the mean. Plus ${c.pir_f.toFixed(2)} per PIR/40 point of roster value and ${c.continuity_f.toFixed(1)} points for a fully returning roster.</p></div>
+    <div class="panel"><div class="eyebrow">Biggest roster hits</div><div class="disp">Partizan, Valencia, Fenerbahçe</div><p>Partizan keeps 24% of last season's minutes and its roster values lowest in the league; Valencia lost Montero, Pradilla, Thompson, Badio and Costello and drops from +4.8 carried to +0.6; Fenerbahçe returns 41% of minutes.</p></div>
+    <div class="panel"><div class="eyebrow">Biggest roster lifts</div><div class="disp">Dubai, Crvena Zvezda</div><p>Dubai returns 92% of a roster that finished near .500 and adds proven Euroleague production; Zvezda's registered nine value 2.9 PIR/40 above league average despite 60% continuity.</p></div>`;
+})();
+
+// ---- LOSO table and RAPM notes
+(function(){
+  const L = D.priorModel.loso;
+  let h = '<thead><tr><th>Season-strength model</th><th>Leave-one-season-out RMSE</th></tr></thead><tbody>';
+  Object.entries(L).forEach(([k, v]) => { h += `<tr><td class="team" style="font-weight:500">${k}</td><td>${v.toFixed(2)}</td></tr>`; });
+  h += `<tr><td class="team" style="font-weight:500;color:var(--ink2)">naive (league mean)</td><td>5.44</td></tr>`;
+  $('#loso').innerHTML = h + '</tbody>';
+  const s = D.priorModel.shift;
+  $('#rapm-notes').innerHTML = `
+    <div class="panel"><div class="eyebrow">Cross-league shift</div><div class="disp">${s.EC.toFixed(1)} / ${s.ACB.toFixed(1)} / ${s.LBA.toFixed(1)}</div><p>Mean change in net RAPM for players moving to the Euroleague from EuroCup, ACB and LBA respectively, estimated from players who made each move with at least 1,000 possessions on both sides.</p></div>
+    <div class="panel"><div class="eyebrow">Why it adds nothing</div><div class="disp">Already in the carry term</div><p>RAPM is regularised toward zero and defined relative to a team's own results, so a roster's summed RAPM largely restates last season's net rating, which the model already has. PIR captures individual production independently of team context and travels better with a player who changes clubs.</p></div>`;
+})();
+
+// ---- players
+(function(){
+  let h = '<thead><tr><th>Player</th><th>2025-26</th><th>2026-27</th><th>Off</th><th>Def</th><th>Net</th></tr></thead><tbody>';
+  D.players.forEach(p => { h += `<tr><td class="team">${p.name}</td><td style="text-align:left;color:var(--ink2)">${p.team25}</td><td style="text-align:left">${p.club26}</td><td>${p.off > 0 ? '+' : ''}${p.off.toFixed(1)}</td><td>${p.def > 0 ? '+' : ''}${p.def.toFixed(1)}</td><td style="font-weight:600">+${p.net.toFixed(1)}</td></tr>`; });
+  $('#players').innerHTML = h + '</tbody>';
+})();
+
+// ---- validation
+(function(){
+  let h = '<thead><tr><th>Test season</th><th>Games</th><th>Model</th><th>Elo only</th><th>Home rate</th><th>AUC</th><th>Accuracy</th></tr></thead><tbody>';
+  D.validation.forEach(v => { h += `<tr><td class="team">${v.season}</td><td>${v.n}</td><td style="font-weight:600">${v.xgb.toFixed(3)}</td><td>${v.elo.toFixed(3)}</td><td>${v.home.toFixed(3)}</td><td>${v.auc.toFixed(2)}</td><td>${pct(v.acc)}%</td></tr>`; });
+  h += `<tr><td class="team">Weighted mean</td><td>1,289</td><td style="font-weight:600">${D.wmean.xgb.toFixed(3)}</td><td>${D.wmean.elo.toFixed(3)}</td><td>${D.wmean.home.toFixed(3)}</td><td></td><td></td></tr>`;
+  $('#val').innerHTML = h + '</tbody>';
+})();
+</script>

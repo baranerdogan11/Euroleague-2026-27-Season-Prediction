@@ -1,0 +1,40 @@
+{
+ "features": [
+  "diff_elo",
+  "diff_adj_net",
+  "diff_adj_off",
+  "diff_adj_def",
+  "diff_net_rtg",
+  "diff_efg_pct",
+  "diff_tov_pct",
+  "diff_orb_pct",
+  "diff_ft_freq",
+  "diff_opp_efg_pct",
+  "diff_opp_tov_pct",
+  "diff_opp_orb_pct",
+  "diff_opp_ft_freq",
+  "diff_pace",
+  "diff_rest_days",
+  "home_adj_net",
+  "away_adj_net",
+  "home_elo",
+  "away_elo"
+ ],
+ "rounds": 280,
+ "params": {
+  "objective": "binary:logistic",
+  "eval_metric": "logloss",
+  "eta": 0.02,
+  "max_depth": 2,
+  "min_child_weight": 15,
+  "subsample": 0.8,
+  "colsample_bytree": 0.6,
+  "reg_lambda": 10.0,
+  "reg_alpha": 1.0,
+  "gamma": 1.0,
+  "seed": 42,
+  "nthread": 4
+ },
+ "elo_logit_coef": 0.007289355853511448,
+ "elo_logit_intercept": 0.5758626461576924
+}

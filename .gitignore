@@ -1,0 +1,20 @@
+# Source data pulled from Hackastat and the Euroleague API: re-created by the pipeline, not redistributed
+data/raw/
+
+# Per-game and per-player tables derived from Hackastat data
+data/team_games_2020_2026.csv
+data/games_2020_2026.csv
+data/features_games.csv
+data/player_rapm.csv
+data/besiktas_eurocup_raw.csv
+data/besiktas_el_equivalent.csv
+data/teams_stats_2023_2026.csv
+data/opponents_stats_2023_2026.csv
+data/sos_adjusted_2023_2026.csv
+
+# Local artefacts
+__pycache__/
+*.pyc
+.DS_Store
+receiver.log
+.claude/
