@@ -1,54 +1,57 @@
-# Euroleague 2026-27 standings prediction
+# Euroleague 2026-27 Season Prediction
 
-Binary home-win classifier (XGBoost anchored on an Elo logistic) trained on Euroleague games 2020-21 to
-2025-26, fed roster-aware pre-season strength, run as a 10,000-iteration Monte Carlo over the real
-2026-27 schedule.
+A pre-season forecast of the 2026-27 Euroleague standings, built from six seasons of game data,
+this summer's rosters, and 10,000 simulated seasons.
 
-Findings: `report/Euroleague_2026-27_Projection.pdf` (page source in `report/`).
+**Headline:** Olympiacos is the clear favourite (26 expected wins, 83% chance of a direct playoff place).
+Real Madrid, Crvena Zvezda and Dubai follow. Positions 5 to 11 are separated by fewer than two wins,
+so most of the league is a coin flip between the playoffs and the play-in. ASVEL is projected last.
 
-## Setup
+Full findings with charts: [`report/Euroleague_2026-27_Projection.pdf`](report/Euroleague_2026-27_Projection.pdf)
+
+## How it works
+
+1. **Game data.** Every Euroleague game from 2020-21 to 2025-26 (1,848 games, 65 stats per team per game)
+   plus EuroCup for the same seasons, pulled from Hackastat and the official Euroleague API.
+2. **Team strength, without leakage.** For each game, both teams get features built only from games played
+   before it: exponentially weighted four factors, offensive and defensive ratings adjusted for opponent
+   quality, Elo, rest days.
+3. **Rosters.** Every club's registered 2026-27 roster is valued on last season's production (PIR per 40
+   and net RAPM, with EuroCup and domestic-league numbers translated to Euroleague scale) and on how much
+   of last season's minutes came back. A regression on 106 historical club-seasons turns that into a
+   pre-season strength for each club.
+4. **Beşiktaş.** No Euroleague history, so their three EuroCup seasons are converted using the eight
+   previous EuroCup-to-Euroleague promotions as the yardstick.
+5. **The model.** An XGBoost classifier predicts the probability the home team wins, anchored on an Elo
+   baseline so the trees only learn corrections. Validated season by season on games it never saw:
+   log loss 0.616 against 0.655 for the home-court base rate, well calibrated.
+6. **The simulation.** The real 380-game schedule is played 10,000 times with those probabilities, each
+   run sampling every club's strength within its uncertainty. Standings use Euroleague tiebreaks.
+
+## What we learned
+
+- Roster turnover matters and is measurable: only about a third of a club's net rating carries over to the
+  next season; the rest is who arrived and who left.
+- RAPM, once matched to the rosters, did not improve the forecast over box-score production. It mostly
+  restates last season's team result, which the model already knows.
+- Promoted clubs have landed near league average regardless of how dominant they were in EuroCup.
+- With under two thousand games, a well-built model matches a one-number Elo rating on raw accuracy.
+  The extra work buys calibration and roster awareness, not a bigger edge. That is the honest ceiling
+  of pre-season prediction; the gains from here come from updating during the season.
+
+## Run it
 
 ```bash
 pip install -r requirements.txt
+python build_clean.py && python build_besiktas.py && python fetch_rosters.py && python rapm_build.py
+python roster_features.py && python features.py && python train.py && python simulate.py
 ```
 
-## What is and isn't in the repository
+Outputs land in `data/`: `sim_standings_2026_27.csv` (expected wins, playoff and play-in odds),
+`sim_rank_distribution_2026_27.csv` (probability of every finishing position), `sim_game_probs_2026_27.csv`
+(a win probability for all 380 games).
 
-Source pulls from Hackastat and the Euroleague API (`data/raw/`) and the per-game and per-player tables
-derived from them are not committed; they are re-created by running the pipeline. What is committed:
-the code, the official 2026-27 club list and schedule, the fitted models, the roster priors, validation
-results and the simulation outputs (`data/sim_*.csv`), so the projections can be inspected without
-re-pulling anything. Hackastat pages sit behind Cloudflare, so re-pulling them needs a logged-in
-browser session and the local receiver (`receiver.py`); see the notes below.
-
-## Pipeline (run in this order)
-
-| Step | Script | Input | Output |
-|---|---|---|---|
-| 1 | `build_clean.py` | `data/raw/gbg_*.tsv` (Hackastat team game-by-game) | `data/team_games_2020_2026.csv`, `data/games_2020_2026.csv`, season aggregate tables |
-| 2 | `build_besiktas.py` | EuroCup game rows, Euroleague rows | `data/besiktas_el_equivalent.csv`, `data/transition_model.json` |
-| 3 | `fetch_rosters.py` | Euroleague API (cached under `data/raw/api/`) | rosters 2020-21 to 2026-27, player season totals |
-| 4 | `rapm_build.py` | `data/raw/rapm_*.tsv` (Hackastat RAPM) | `data/player_rapm.csv` matched to API player codes |
-| 5 | `roster_features.py` | rosters, player stats, RAPM, team games | `data/roster_prior.csv` (pre-season strength per club-season) |
-| 6 | `features.py` | team games, Besiktas rows, roster prior | `data/features_games.csv`, `data/team_state_2026_27.csv` |
-| 7 | `train.py` | features | `data/xgb_home_win.json`, `data/elo_anchor.pkl`, `data/validation_results.csv` |
-| 8 | `simulate.py` | model, team state, schedule | `data/sim_standings_2026_27.csv`, `data/sim_rank_distribution_2026_27.csv`, `data/sim_game_probs_2026_27.csv` |
-
-`experiment.py` documents the model selection (feature sets, Elo anchor, tree depth).
-`receiver.py` is the local HTTP receiver used to pass Hackastat tables out of a logged-in Chrome tab
-(Hackastat sits behind Cloudflare); it is only needed when re-pulling Hackastat data.
-
-## Data notes
-
-- Hackastat team game-by-game rows: 65 stats per team-game; Euroleague 2020-21 to 2025-26, EuroCup
-  2020-21 to 2025-26. ALBA Berlin is excluded from every table (`EXCLUDE` in `build_clean.py`).
-- Besiktas has no Euroleague history: their EuroCup seasons are transformed with ratios estimated from
-  eight previous EuroCup-to-Euroleague promotions (level capped by a regression on those promotions).
-- Rosters are as registered in the Euroleague API on 20 Sep 2026. To refresh, delete
-  `data/raw/api/people_cache/E2026_*.json` and rerun steps 3, 5, 6, 7, 8.
-- Player value for the roster prior: PIR per 40 (API) and net RAPM (Hackastat); RAPM was tested and adds
-  nothing over PIR at the season level (see `data/roster_prior_model.json`, `loso_all`).
-
-## Validation (rolling origin, test season held out)
-
-Weighted out-of-sample log loss 0.616 (Elo-only 0.614, home-rate baseline 0.655); well calibrated.
+Raw Hackastat pulls are not included (the site sits behind Cloudflare; `receiver.py` is the helper that
+captures its tables from a logged-in browser). Everything derived from the official API, the fitted
+models, the roster priors and the simulation results are committed, so the projections can be inspected
+without re-pulling anything.
