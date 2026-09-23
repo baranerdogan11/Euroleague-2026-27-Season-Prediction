@@ -18,3 +18,7 @@ __pycache__/
 .DS_Store
 receiver.log
 .claude/
+
+# Player app: fetched caches and the large intermediate JSON (rebuilt by app/fetch_team.py)
+app/cache/
+app/data/

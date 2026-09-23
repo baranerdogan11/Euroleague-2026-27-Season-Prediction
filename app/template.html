@@ -1,0 +1,312 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Euroleague Shot Profiles</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#0a1731;--bg2:#070f24;--panel:#121f38;--panel2:#19233b;--panel3:#1f2b47;--line:#243052;--line2:#2e3b5e;
+  --ink:#ffffff;--ink2:#b3bccf;--muted:#7c86a3;--orange:#f26f21;--orange2:#ff8a3d;--orange-dim:#7a3a14;
+  --slate:#4a5570;--miss:#9aa5c0;--good:#3fc48a;
+  --disp:"Barlow Condensed","Arial Narrow",Impact,sans-serif;--body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased}
+.app{max-width:1240px;margin:0 auto;padding:0 24px 64px}
+/* header */
+.top{display:flex;align-items:stretch;justify-content:space-between;gap:24px;padding:26px 0 18px;border-bottom:1px solid var(--line)}
+.brand .eyebrow{font-family:var(--disp);font-weight:700;letter-spacing:.22em;font-size:12px;color:var(--orange);text-transform:uppercase}
+.brand h1{font-family:var(--disp);font-weight:800;font-size:54px;line-height:.9;margin:4px 0 0;text-transform:uppercase;letter-spacing:.01em;text-wrap:balance}
+.tag{align-self:flex-start;background:var(--orange);color:#0a1731;padding:10px 18px 10px 22px;clip-path:polygon(10px 0,100% 0,100% 100%,0 100%);text-align:right;min-width:190px}
+.tag b{display:block;font-family:var(--disp);font-weight:800;font-size:30px;line-height:1;letter-spacing:.02em}
+.tag span{display:block;font-family:var(--disp);font-weight:700;font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-top:4px}
+/* controls */
+.controls{display:grid;grid-template-columns:1fr 1fr auto;gap:14px;padding:18px 0;align-items:end}
+.field label{display:block;font-family:var(--disp);font-weight:700;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+select{width:100%;appearance:none;-webkit-appearance:none;background:var(--panel) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'><path d='M1 1l6 6 6-6' fill='none' stroke='%23f26f21' stroke-width='2'/></svg>") no-repeat right 14px center;border:1px solid var(--line2);color:var(--ink);font-family:var(--disp);font-weight:600;font-size:19px;letter-spacing:.03em;padding:11px 40px 11px 14px;border-radius:6px;cursor:pointer;text-transform:uppercase}
+select:focus{outline:2px solid var(--orange);outline-offset:1px}
+select:disabled{opacity:.5;cursor:default}
+.btn{background:transparent;border:1px solid var(--orange);color:var(--orange);font-family:var(--disp);font-weight:700;font-size:15px;letter-spacing:.14em;text-transform:uppercase;padding:12px 18px;border-radius:6px;cursor:pointer}
+.btn:hover{background:var(--orange);color:#0a1731}
+.btn:focus-visible{outline:2px solid var(--orange2);outline-offset:2px}
+/* hero */
+.hero{display:grid;grid-template-columns:300px 1fr;gap:28px;background:linear-gradient(135deg,var(--panel) 0%,var(--bg2) 100%);border:1px solid var(--line);border-radius:10px;padding:0 28px 0 0;overflow:hidden;margin-top:6px;position:relative}
+.hero::before{content:"";position:absolute;left:-60px;top:-40px;width:420px;height:420px;background:radial-gradient(closest-side,rgba(242,111,33,.42),rgba(242,111,33,0));pointer-events:none}
+.photo{position:relative;height:340px;display:flex;align-items:flex-end;justify-content:center}
+.photo img{height:330px;max-width:100%;object-fit:contain;object-position:bottom;filter:drop-shadow(0 18px 30px rgba(0,0,0,.6));position:relative}
+.photo .num{position:absolute;left:22px;top:10px;font-family:var(--disp);font-weight:800;font-size:150px;line-height:.8;color:transparent;-webkit-text-stroke:2px rgba(242,111,33,.55);letter-spacing:-.02em;user-select:none}
+.who{padding:26px 0 22px;display:flex;flex-direction:column;justify-content:space-between;gap:16px;min-width:0}
+.who h2{font-family:var(--disp);font-weight:800;font-size:46px;line-height:.9;margin:0;text-transform:uppercase;letter-spacing:.01em}
+.who h2 small{display:block;font-size:22px;font-weight:600;color:var(--orange);letter-spacing:.06em;margin-bottom:6px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 22px;color:var(--ink2);font-size:13px;margin-top:10px}
+.facts b{color:var(--ink);font-weight:600}
+.chip{display:inline-block;font-family:var(--disp);font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:4px 9px;border-radius:3px;background:var(--panel3);color:var(--ink2);border:1px solid var(--line2)}
+.chip.o{background:var(--orange);color:#0a1731;border-color:var(--orange)}
+.tiles{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+.tile{background:rgba(10,23,49,.65);border:1px solid var(--line);border-radius:6px;padding:10px 10px 8px;text-align:center}
+.tile b{display:block;font-family:var(--disp);font-weight:800;font-size:30px;line-height:1;font-variant-numeric:tabular-nums}
+.tile span{display:block;font-family:var(--disp);font-weight:700;font-size:11px;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin-top:5px}
+.tile.o b{color:var(--orange)}
+/* main grid */
+.main{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.85fr);gap:18px;margin-top:18px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;min-width:0}
+.panel h3{font-family:var(--disp);font-weight:800;font-size:22px;letter-spacing:.04em;text-transform:uppercase;margin:0 0 2px}
+.panel .sub{color:var(--muted);font-size:12.5px;margin:0 0 12px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:4px 0 12px}
+.seg{display:inline-flex;border:1px solid var(--line2);border-radius:6px;overflow:hidden}
+.seg button{background:transparent;border:0;color:var(--ink2);font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.12em;text-transform:uppercase;padding:7px 12px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line2)}
+.seg button[aria-pressed="true"]{background:var(--orange);color:#0a1731}
+.seg button:focus-visible{outline:2px solid var(--orange2);outline-offset:-2px}
+.toolbar select{width:auto;font-size:14px;padding:7px 34px 7px 10px;letter-spacing:.06em}
+.court-wrap{position:relative}
+.court{width:100%;height:auto;display:block}
+.court .line{fill:none;stroke:#3a4a75;stroke-width:6;vector-effect:non-scaling-stroke}
+.court .floor{fill:#0d1a3a}
+.court .paint{fill:#12224a}
+.court .made{fill:var(--orange);stroke:#0a1731;stroke-width:3}
+.court .miss{fill:none;stroke:var(--miss);stroke-width:5}
+.court .missx{stroke:var(--miss);stroke-width:5;stroke-linecap:round}
+.court .zone{stroke:#0a1731;stroke-width:4}
+.court .zl{font-family:var(--disp);font-weight:800;font-size:56px;fill:#fff;text-anchor:middle;paint-order:stroke;stroke:#0a1731;stroke-width:10;stroke-linejoin:round}
+.court .zs{font-family:var(--body);font-weight:500;font-size:34px;fill:#d6dcea;text-anchor:middle;paint-order:stroke;stroke:#0a1731;stroke-width:8}
+.shot{transform-box:fill-box;transform-origin:center;animation:pop .32s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes pop{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.shot{animation:none}}
+.caption{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:8px;font-size:12.5px;color:var(--ink2);min-height:22px}
+.caption b{font-family:var(--disp);font-weight:700;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:-1px;margin-right:6px}
+.legend i.m{background:var(--orange)} .legend i.x{border:2px solid var(--miss)}
+/* shooting panel */
+.splits{display:grid;gap:10px;margin-bottom:16px}
+.split{display:grid;grid-template-columns:52px 1fr 90px;align-items:center;gap:10px;font-variant-numeric:tabular-nums}
+.split .k{font-family:var(--disp);font-weight:700;font-size:15px;letter-spacing:.08em;color:var(--ink2)}
+.split .bar{height:10px;background:var(--bg2);border-radius:5px;overflow:hidden;border:1px solid var(--line)}
+.split .bar i{display:block;height:100%;background:var(--orange);border-radius:5px;transition:width .6s ease}
+.split .v{text-align:right;font-size:13px}.split .v b{font-family:var(--disp);font-size:20px;font-weight:800;margin-right:4px}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:13px}
+th{font-family:var(--disp);font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-align:right;padding:6px 8px;border-bottom:1px solid var(--line2);white-space:nowrap}
+td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+td.k{font-weight:600}
+tr:hover td{background:var(--panel2)}
+.zone-bar{display:inline-block;height:8px;background:var(--orange);border-radius:4px;vertical-align:middle;margin-left:6px}
+.log{margin-top:18px}
+.log summary{cursor:pointer;font-family:var(--disp);font-weight:800;font-size:22px;letter-spacing:.04em;text-transform:uppercase;list-style:none;display:flex;align-items:center;gap:10px}
+.log summary::before{content:"";width:0;height:0;border-left:8px solid var(--orange);border-top:6px solid transparent;border-bottom:6px solid transparent;transition:transform .2s}
+.log[open] summary::before{transform:rotate(90deg)}
+.log .scroll{overflow-x:auto;margin-top:10px}
+td.w{color:var(--good)} td.l{color:#ff7b7b}
+.tip{position:fixed;pointer-events:none;background:#fff;color:#0a1731;padding:8px 10px;border-radius:4px;font-size:12px;line-height:1.35;opacity:0;transition:opacity .08s;z-index:9;white-space:nowrap}
+.tip b{font-family:var(--disp);font-size:14px;letter-spacing:.04em}
+.foot{margin-top:26px;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media (max-width:900px){.hero{grid-template-columns:220px 1fr}.tiles{grid-template-columns:repeat(4,1fr)}.main{grid-template-columns:1fr}.controls{grid-template-columns:1fr 1fr}.brand h1{font-size:40px}}
+@media (max-width:600px){.top{flex-wrap:wrap;gap:12px}.tag{min-width:0;padding:8px 14px 8px 18px}.tag b{font-size:22px}.brand h1{font-size:34px}.hero{grid-template-columns:1fr;padding:0 18px 18px}.photo{height:260px}.photo img{height:250px}.who h2{font-size:34px}.controls{grid-template-columns:1fr}.tiles{gap:6px}.tile{padding:8px 4px 6px}.tile b{font-size:22px}.tile span{font-size:9.5px;letter-spacing:.12em}.app{padding:0 14px 48px}.panel{padding:14px 12px}}
+</style>
+<div class="app">
+  <header class="top">
+    <div class="brand"><div class="eyebrow">Euroleague</div><h1>Player Shot Profiles</h1></div>
+    <div class="tag"><b id="tag-season">2025-26</b><span id="tag-sub">Regular season + playoffs</span></div>
+  </header>
+
+  <div class="controls">
+    <div class="field"><label for="team">Team</label><select id="team"></select></div>
+    <div class="field"><label for="player">Player</label><select id="player"></select></div>
+    <button class="btn" id="replay" type="button">Replay chart</button>
+  </div>
+
+  <section class="hero" id="hero">
+    <div class="photo"><div class="num" id="num"></div><img id="photo" alt=""></div>
+    <div class="who">
+      <div>
+        <h2 id="name"><small id="pos"></small><span id="nm"></span></h2>
+        <div class="facts" id="facts"></div>
+      </div>
+      <div class="tiles" id="tiles"></div>
+    </div>
+  </section>
+
+  <div class="main">
+    <section class="panel">
+      <h3>Shot chart</h3>
+      <p class="sub" id="chart-sub">Every field-goal attempt, plotted where it was taken. Basket at the bottom.</p>
+      <div class="toolbar">
+        <div class="seg" id="f-result"><button aria-pressed="true" data-v="all">All</button><button aria-pressed="false" data-v="made">Made</button><button aria-pressed="false" data-v="miss">Missed</button></div>
+        <div class="seg" id="f-type"><button aria-pressed="true" data-v="all">2PT + 3PT</button><button aria-pressed="false" data-v="2">2PT</button><button aria-pressed="false" data-v="3">3PT</button></div>
+        <div class="seg" id="f-view"><button aria-pressed="true" data-v="dots">Shots</button><button aria-pressed="false" data-v="zones">Zones</button></div>
+        <select id="game" aria-label="Game"></select>
+      </div>
+      <div class="court-wrap">
+        <svg class="court" id="court" viewBox="-30 0 1580 1440" role="img" aria-label="Half-court shot chart"></svg>
+      </div>
+      <div class="caption"><b id="cap"></b><div class="legend"><span><i class="m"></i>Made</span><span><i class="x"></i>Missed</span></div></div>
+    </section>
+
+    <section class="panel">
+      <h3>Shooting</h3>
+      <p class="sub">Season splits, then accuracy by zone of the floor.</p>
+      <div class="splits" id="splits"></div>
+      <table id="zones"><thead><tr><th>Zone</th><th>FGM / FGA</th><th>FG%</th><th>Share</th></tr></thead><tbody></tbody></table>
+    </section>
+  </div>
+
+  <details class="log panel" id="log-panel">
+    <summary>Game log</summary>
+    <div class="scroll"><table id="log"><thead><tr><th>Rd</th><th>Date</th><th>Opponent</th><th>Result</th><th>Min</th><th>Pts</th><th>Reb</th><th>Ast</th><th>Stl</th><th>Blk</th><th>Tov</th><th>2P</th><th>3P</th><th>FT</th><th>PIR</th><th>+/-</th></tr></thead><tbody></tbody></table></div>
+  </details>
+
+  <div class="foot"><span id="foot-l"></span><span>Data: Euroleague official feeds · Photos: Euroleague media days</span></div>
+</div>
+<div class="tip" id="tip"></div>
+<script>
+const DATA = /*DATA*/;
+const $ = s => document.querySelector(s);
+const TEAM_LABEL = {IST:'Efes',MIL:'Milan',BES:'Beşiktaş',RED:'Crvena Zvezda',DUB:'Dubai',BAR:'Barcelona',MUN:'Bayern',ULK:'Fenerbahçe',HTA:'Hapoel TA',BAS:'Baskonia',ASV:'ASVEL',TEL:'Maccabi',OLY:'Olympiacos',PAN:'Panathinaikos',PRS:'Paris',PAR:'Partizan',MAD:'Real Madrid',PAM:'Valencia',VIR:'Virtus',ZAL:'Zalgiris',MCO:'Monaco'};
+const PHASE = {RS:'Regular season',PI:'Play-in',PO:'Playoffs',FF:'Final Four'};
+const state = {team:null, player:null, result:'all', type:'all', view:'dots', game:'all', timers:[]};
+const tip = $('#tip');
+const showTip = (e, h) => { tip.innerHTML = h; tip.style.opacity = 1; moveTip(e); };
+const moveTip = e => { const w = tip.offsetWidth, hh = tip.offsetHeight; let x = e.clientX + 14, y = e.clientY + 14; if (x + w > innerWidth - 8) x = e.clientX - w - 14; if (y + hh > innerHeight - 8) y = e.clientY - hh - 14; tip.style.left = x + 'px'; tip.style.top = y + 'px'; };
+const hideTip = () => tip.style.opacity = 0;
+const pct = (m, a) => a ? (100 * m / a).toFixed(1) + '%' : '–';
+const f1 = v => (Math.round(v * 10) / 10).toFixed(1);
+const cap = s => s.toLowerCase().replace(/(^|[\s\-'.])(\S)/g, (m, p, c) => p + c.toUpperCase()).replace(/\bJr\.?/, 'Jr.').replace(/\bIv\b/, 'IV').replace(/\bIii\b/, 'III');
+const nameOf = n => { const [sur, first] = n.split(',').map(s => s.trim()); return {first: cap(first || ''), sur: cap(sur)}; };
+const age = b => { if (!b) return null; const d = new Date(b), n = new Date('2025-10-01'); let a = n.getFullYear() - d.getFullYear(); if (n < new Date(n.getFullYear(), d.getMonth(), d.getDate())) a--; return a; };
+
+// ---- court geometry (cm, basket at origin, y toward half court) -> SVG (basket at bottom)
+const X = x => x + 760, Y = y => 1260 - y;
+const zoneOf = (x, y, pts) => { const d = Math.hypot(x, y); if (pts === 3) return y < 141.5 ? 'c3' : 'a3'; if (d < 150) return 'rim'; if (Math.abs(x) < 245 && y < 422.5) return 'paint'; return 'mid'; };
+const ZONES = {rim:'At the rim', paint:'Paint (non-rim)', mid:'Mid-range', c3:'Corner 3', a3:'Above-break 3'};
+const twoPtPath = () => `M${X(-660)} ${Y(-157.5)} L${X(-660)} ${Y(141.5)} A675 675 0 0 1 ${X(660)} ${Y(141.5)} L${X(660)} ${Y(-157.5)} Z`;
+function courtBase(){
+  return `<rect class="floor" x="${X(-750)}" y="${Y(1242.5)}" width="1500" height="1400"/>
+  <g id="zones-layer"></g>
+  <rect class="paint" x="${X(-245)}" y="${Y(422.5)}" width="490" height="580" fill-opacity=".9"/>
+  <g class="lines">
+    <rect class="line" x="${X(-750)}" y="${Y(1242.5)}" width="1500" height="1400"/>
+    <rect class="line" x="${X(-245)}" y="${Y(422.5)}" width="490" height="580"/>
+    <circle class="line" cx="${X(0)}" cy="${Y(422.5)}" r="180"/>
+    <path class="line" d="M${X(-125)} ${Y(0)} A125 125 0 0 1 ${X(125)} ${Y(0)}"/>
+    <path class="line" d="${twoPtPath()}"/>
+    <line class="line" x1="${X(-90)}" y1="${Y(-37.5)}" x2="${X(90)}" y2="${Y(-37.5)}" style="stroke:#c9d2e8"/>
+    <circle class="line" cx="${X(0)}" cy="${Y(0)}" r="22.5" style="stroke:var(--orange)"/>
+    <path class="line" d="M${X(-180)} ${Y(1242.5)} A180 180 0 0 0 ${X(180)} ${Y(1242.5)}"/>
+  </g>
+  <g id="labels-layer"></g>
+  <g id="shots-layer"></g>`;
+}
+
+// ---- data helpers
+const team = () => DATA.teams[state.team];
+const player = () => team().players[state.player];
+function playerShots(){
+  const t = team(), p = state.player;
+  return t.shots.filter(s => s[1] === p && (state.game === 'all' || s[0] === +state.game)
+    && (state.result === 'all' || (state.result === 'made') === !!s[4])
+    && (state.type === 'all' || s[5] === +state.type));
+}
+const gameLabel = g => { const t = team(), home = g.home === t.code, opp = home ? g.away : g.home, ts = home ? g.hs : g.as, os = home ? g.as : g.hs; return {opp: TEAM_LABEL[opp] || opp, home, res: ts > os ? 'W' : 'L', score: `${ts}-${os}`, txt: `R${g.round} · ${home ? 'vs' : '@'} ${TEAM_LABEL[opp] || opp}`}; };
+
+// ---- render
+function renderTeams(){
+  const sel = $('#team'); sel.innerHTML = Object.values(DATA.teams).map(t => `<option value="${t.code}">${t.name}</option>`).join('');
+  state.team = sel.value; sel.disabled = Object.keys(DATA.teams).length < 2;
+  const t = team(); $('#tag-season').textContent = t.season.replace('E', '').replace(/(\d{4})/, (m, y) => `${y}-${(+y + 1).toString().slice(2)}`);
+  renderPlayers();
+}
+function renderPlayers(){
+  const t = team(), sel = $('#player');
+  sel.innerHTML = t.players.map((p, i) => { const n = nameOf(p.name); return `<option value="${i}">#${p.dorsal} ${n.first} ${n.sur}</option>`; }).join('');
+  const top = t.players.reduce((b, p, i) => p.tot.min > t.players[b].tot.min ? i : b, 0);
+  sel.value = top; state.player = top; renderGames(); renderPlayer();
+}
+function renderGames(){
+  const t = team(), sel = $('#game');
+  sel.innerHTML = `<option value="all">All games (${t.games.length})</option>` + t.games.map((g, i) => { const l = gameLabel(g); return `<option value="${i}">${l.txt} · ${l.res} ${l.score}</option>`; }).join('');
+  state.game = 'all';
+}
+function renderPlayer(){
+  const p = player(), t = team(), n = nameOf(p.name), tot = p.tot, gp = tot.gp || 1;
+  $('#photo').src = p.photo || ''; $('#photo').alt = `${n.first} ${n.sur}`; $('#num').textContent = p.dorsal;
+  $('#pos').textContent = `#${p.dorsal} · ${p.position}`; $('#nm').innerHTML = `${n.first}<br>${n.sur}`;
+  const a = age(p.birth);
+  $('#facts').innerHTML = [p.height ? `<span><b>${p.height} cm</b></span>` : '', a ? `<span><b>${a}</b> yrs</span>` : '', p.country ? `<span>${p.country}</span>` : '',
+    `<span><b>${tot.gp}</b> games · <b>${f1(tot.min / gp)}</b> min</span>`, `<span class="chip ${p.photo_src === '2026-27 media day' ? 'o' : ''}">${p.photo_src === '2026-27 media day' ? '2026-27 media day photo' : 'Left the club · 2025-26 photo'}</span>`].join('');
+  const tiles = [['pts','PTS',1],['reb','REB',0],['ast','AST',0],['stl','STL',0],['blk','BLK',0],['tov','TOV',0],['pir','PIR',1],['fd','FD',0]];
+  $('#tiles').innerHTML = tiles.map(([k, l, o]) => `<div class="tile ${o ? 'o' : ''}"><b>${f1(tot[k] / gp)}</b><span>${l}</span></div>`).join('');
+  const fga = tot.fga2 + tot.fga3, fgm = tot.fgm2 + tot.fgm3, efg = fga ? (fgm + 0.5 * tot.fgm3) / fga : 0, ts = (fga + 0.44 * tot.fta) ? tot.pts / (2 * (fga + 0.44 * tot.fta)) : 0;
+  const rows = [['2P', tot.fgm2, tot.fga2, tot.fga2 ? tot.fgm2 / tot.fga2 : 0], ['3P', tot.fgm3, tot.fga3, tot.fga3 ? tot.fgm3 / tot.fga3 : 0], ['FT', tot.ftm, tot.fta, tot.fta ? tot.ftm / tot.fta : 0], ['eFG', null, null, efg], ['TS', null, null, ts]];
+  $('#splits').innerHTML = rows.map(([k, m, at, v]) => `<div class="split"><span class="k">${k}%</span><div class="bar"><i style="width:${Math.min(100, v * 100)}%"></i></div><div class="v"><b>${(v * 100).toFixed(1)}</b>${m !== null ? `${m}/${at}` : ''}</div></div>`).join('');
+  // game log
+  const lg = $('#log tbody');
+  lg.innerHTML = p.log.map(r => { const g = t.games[r[0]], l = gameLabel(g); return `<tr><td class="k">${g.round}</td><td>${g.date.slice(5)}</td><td>${l.home ? 'vs' : '@'} ${l.opp}</td><td class="${l.res === 'W' ? 'w' : 'l'}">${l.res} ${l.score}</td><td>${r[1]}</td><td class="k">${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td><td>${r[5]}</td><td>${r[6]}</td><td>${r[7]}</td><td>${r[8]}/${r[9]}</td><td>${r[10]}/${r[11]}</td><td>${r[12]}/${r[13]}</td><td>${r[14]}</td><td>${r[15] ?? ''}</td></tr>`; }).join('');
+  $('#foot-l').textContent = `${t.name} · ${t.games.length} games · ${t.shots.length.toLocaleString()} team shots plotted · built ${DATA.built}`;
+  renderChart(true);
+}
+function zoneStats(shots){
+  const z = {}; Object.keys(ZONES).forEach(k => z[k] = {m: 0, a: 0});
+  shots.forEach(s => { const k = zoneOf(s[2], s[3], s[5]); z[k].a++; z[k].m += s[4]; });
+  return z;
+}
+function renderChart(animate){
+  state.timers.forEach(clearTimeout); state.timers = [];
+  const svg = $('#court'); svg.innerHTML = courtBase();
+  const shots = playerShots();
+  const layer = svg.querySelector('#shots-layer'), zl = svg.querySelector('#zones-layer');
+  const t = team();
+  // zone table always from the current filter set
+  const zs = zoneStats(shots), total = shots.length || 1;
+  $('#zones tbody').innerHTML = Object.entries(ZONES).map(([k, l]) => { const v = zs[k]; const share = v.a / total; return `<tr><td class="k">${l}</td><td>${v.m} / ${v.a}</td><td class="k">${pct(v.m, v.a)}</td><td>${(share * 100).toFixed(0)}%<span class="zone-bar" style="width:${Math.round(share * 60)}px"></span></td></tr>`; }).join('');
+  if (state.view === 'zones') {
+    const col = (m, a) => { if (!a) return 'rgba(74,85,112,.35)'; const p = m / a; const q = Math.max(0, Math.min(1, (p - 0.25) / 0.45)); return `rgba(242,111,33,${(0.12 + 0.68 * q).toFixed(2)})`; };
+    const lab = (k, x, y, small) => { const v = zs[k]; return `<text class="zl" x="${x}" y="${y}" style="${small ? 'font-size:34px' : ''}">${pct(v.m, v.a)}</text><text class="zs" x="${x}" y="${y + (small ? 30 : 40)}" style="${small ? 'font-size:24px' : ''}">${v.m}/${v.a}</text>`; };
+    zl.innerHTML = `<rect class="zone" x="${X(-750)}" y="${Y(1242.5)}" width="1500" height="1400" fill="${col(zs.a3.m, zs.a3.a)}"/>
+      <rect class="zone" x="${X(-750)}" y="${Y(141.5)}" width="90" height="299" fill="${col(zs.c3.m, zs.c3.a)}"/><rect class="zone" x="${X(660)}" y="${Y(141.5)}" width="90" height="299" fill="${col(zs.c3.m, zs.c3.a)}"/>
+      <path class="zone" d="${twoPtPath()}" fill="${col(zs.mid.m, zs.mid.a)}"/>
+      <rect class="zone" x="${X(-245)}" y="${Y(422.5)}" width="490" height="580" fill="${col(zs.paint.m, zs.paint.a)}"/>
+      <circle class="zone" cx="${X(0)}" cy="${Y(0)}" r="150" fill="${col(zs.rim.m, zs.rim.a)}"/>
+`;
+    svg.querySelector('#labels-layer').innerHTML = `${lab('a3', X(0), Y(820))}${lab('c3', X(-705), Y(30), true)}${lab('c3', X(705), Y(30), true)}${lab('mid', X(-430), Y(330))}${lab('paint', X(0), Y(300))}${lab('rim', X(0), Y(70))}`;
+    svg.querySelector('.paint').style.display = 'none';
+    $('#cap').textContent = `${shots.length} attempts by zone`;
+    return;
+  }
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const step = animate && !reduced ? Math.min(14, 2600 / Math.max(1, shots.length)) : 0;
+  const capEl = $('#cap');
+  shots.forEach((s, i) => {
+    const draw = () => {
+      const x = X(s[2]), y = Y(s[3]);
+      const el = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      el.setAttribute('class', 'shot');
+      el.innerHTML = s[4] ? `<circle class="made" cx="${x}" cy="${y}" r="17"/>` : `<circle class="miss" cx="${x}" cy="${y}" r="15"/><line class="missx" x1="${x - 7}" y1="${y - 7}" x2="${x + 7}" y2="${y + 7}"/><line class="missx" x1="${x + 7}" y1="${y - 7}" x2="${x - 7}" y2="${y + 7}"/>`;
+      const g = t.games[s[0]], l = gameLabel(g);
+      el.addEventListener('mousemove', e => showTip(e, `<b>${s[4] ? 'Made' : 'Missed'} ${s[5]}PT · ${ZONES[zoneOf(s[2], s[3], s[5])]}</b><br>${l.txt} · Q${s[6] > 40 ? 'OT' : Math.ceil(s[6] / 10)} · ${(Math.hypot(s[2], s[3]) / 100).toFixed(1)} m${s[8] ? ' · fast break' : ''}${s[9] ? ' · second chance' : ''}`));
+      el.addEventListener('mouseleave', hideTip);
+      layer.appendChild(el);
+      if (step) capEl.textContent = `${l.txt} · ${i + 1} / ${shots.length}`;
+    };
+    if (step) state.timers.push(setTimeout(draw, i * step)); else draw();
+  });
+  const done = () => { const m = shots.filter(s => s[4]).length; capEl.textContent = `${m} / ${shots.length} made · ${pct(m, shots.length)}${state.game !== 'all' ? ' · ' + gameLabel(t.games[+state.game]).txt : ''}`; };
+  if (step) state.timers.push(setTimeout(done, shots.length * step + 200)); else done();
+}
+
+// ---- wiring
+$('#team').addEventListener('change', e => { state.team = e.target.value; renderPlayers(); });
+$('#player').addEventListener('change', e => { state.player = +e.target.value; state.game = 'all'; $('#game').value = 'all'; renderPlayer(); });
+$('#game').addEventListener('change', e => { state.game = e.target.value; renderChart(true); });
+$('#replay').addEventListener('click', () => renderChart(true));
+[['#f-result', 'result'], ['#f-type', 'type'], ['#f-view', 'view']].forEach(([sel, key]) => {
+  $(sel).querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    $(sel).querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); state[key] = b.dataset.v; renderChart(key === 'view' ? false : true);
+  }));
+});
+(function(){ const h = location.hash.replace('#','').split('/'); if (h[0] && DATA.teams[h[0]]) { state.hashTeam = h[0]; state.hashPlayer = h[1] || null; state.hashView = h[2] || null; } })();
+renderTeams();
+if (state.hashTeam) { $('#team').value = state.hashTeam; state.team = state.hashTeam; renderPlayers(); }
+if (state.hashPlayer) { const i = team().players.findIndex(p => p.pid === state.hashPlayer); if (i >= 0) { $('#player').value = i; state.player = i; renderPlayer(); } }
+if (state.hashView === 'zones') { $('#f-view button[data-v="zones"]').click(); }
+</script>

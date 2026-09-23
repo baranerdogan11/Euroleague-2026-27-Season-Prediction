@@ -39,6 +39,20 @@ Full findings with charts: [`report/Euroleague_2026-27_Projection.pdf`](report/E
   The extra work buys calibration and roster awareness, not a bigger edge. That is the honest ceiling
   of pre-season prediction; the gains from here come from updating during the season.
 
+## Player shot profiles app
+
+`app/index.html` is a self-contained page: pick a team, pick a player, and get season stats, shooting splits,
+accuracy by zone and an animated half-court chart of every shot (made and missed) with per-game filtering.
+Demo data: Fenerbahçe Beko 2025-26 (43 games, 2,664 shots), photos from the 2026-27 media days where the
+player is still registered.
+
+```bash
+python app/fetch_team.py ULK E2025   # roster, photos, box scores, shot coordinates (cached per game)
+python app/build.py                  # -> app/index.html
+```
+
+Deep links: `app/index.html#ULK/P002100/zones` (team code, player id, optional `zones` view).
+
 ## Run it
 
 ```bash
