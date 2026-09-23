@@ -133,7 +133,6 @@ td.w{color:var(--good)} td.l{color:#ff7b7b}
       <p class="sub" id="chart-sub">Every field-goal attempt, plotted where it was taken. Basket at the bottom.</p>
       <div class="toolbar">
         <div class="seg" id="f-result"><button aria-pressed="true" data-v="all">All</button><button aria-pressed="false" data-v="made">Made</button><button aria-pressed="false" data-v="miss">Missed</button></div>
-        <div class="seg" id="f-type"><button aria-pressed="true" data-v="all">2PT + 3PT</button><button aria-pressed="false" data-v="2">2PT</button><button aria-pressed="false" data-v="3">3PT</button></div>
         <div class="seg" id="f-view"><button aria-pressed="true" data-v="dots">Shots</button><button aria-pressed="false" data-v="zones">Zones</button></div>
         <select id="game" aria-label="Game"></select>
       </div>
@@ -299,7 +298,7 @@ $('#team').addEventListener('change', e => { state.team = e.target.value; render
 $('#player').addEventListener('change', e => { state.player = +e.target.value; state.game = 'all'; $('#game').value = 'all'; renderPlayer(); });
 $('#game').addEventListener('change', e => { state.game = e.target.value; renderChart(true); });
 $('#replay').addEventListener('click', () => renderChart(true));
-[['#f-result', 'result'], ['#f-type', 'type'], ['#f-view', 'view']].forEach(([sel, key]) => {
+[['#f-result', 'result'], ['#f-view', 'view']].forEach(([sel, key]) => {
   $(sel).querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
     $(sel).querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); state[key] = b.dataset.v; renderChart(key === 'view' ? false : true);
   }));
