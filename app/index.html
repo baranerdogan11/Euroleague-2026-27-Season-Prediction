@@ -235,7 +235,7 @@ function renderPlayer(){
   const tiles = [['pts','PTS',1],['reb','REB',0],['ast','AST',0],['stl','STL',0],['blk','BLK',0],['tov','TOV',0],['pir','PIR',1],['fd','FD',0]];
   $('#tiles').innerHTML = tiles.map(([k, l, o]) => `<div class="tile ${o ? 'o' : ''}"><b>${f1(tot[k] / gp)}</b><span>${l}</span></div>`).join('');
   const fga = tot.fga2 + tot.fga3, fgm = tot.fgm2 + tot.fgm3, efg = fga ? (fgm + 0.5 * tot.fgm3) / fga : 0, ts = (fga + 0.44 * tot.fta) ? tot.pts / (2 * (fga + 0.44 * tot.fta)) : 0;
-  const rows = [['2P', tot.fgm2, tot.fga2, tot.fga2 ? tot.fgm2 / tot.fga2 : 0], ['3P', tot.fgm3, tot.fga3, tot.fga3 ? tot.fgm3 / tot.fga3 : 0], ['FT', tot.ftm, tot.fta, tot.fta ? tot.ftm / tot.fta : 0], ['eFG', null, null, efg], ['TS', null, null, ts]];
+  const rows = [['2P', tot.fgm2, tot.fga2, tot.fga2 ? tot.fgm2 / tot.fga2 : 0], ['3P', tot.fgm3, tot.fga3, tot.fga3 ? tot.fgm3 / tot.fga3 : 0], ['FT', tot.ftm, tot.fta, tot.fta ? tot.ftm / tot.fta : 0], ['TS', null, null, ts]];
   $('#splits').innerHTML = rows.map(([k, m, at, v]) => `<div class="split"><span class="k">${k}%</span><div class="bar"><i style="width:${Math.min(100, v * 100)}%"></i></div><div class="v"><b>${(v * 100).toFixed(1)}</b>${m !== null ? `${m}/${at}` : ''}</div></div>`).join('');
   // game log
   const lg = $('#log tbody');
